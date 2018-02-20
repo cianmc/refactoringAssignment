@@ -61,7 +61,7 @@ public class CreateBankDialog extends JFrame {
 		
 		String[] comboTypes = {"Current", "Deposit"};
 		
-		final JComboBox comboBox = new JComboBox(comboTypes);
+		final JComboBox<String> comboBox = new JComboBox<>(comboTypes);
 		
 		
 		accountNumberLabel = new JLabel("Photograph file name: ");
