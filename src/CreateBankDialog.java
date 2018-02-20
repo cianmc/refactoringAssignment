@@ -43,11 +43,9 @@ public class CreateBankDialog extends JFrame {
 	JTextField accountNumberTextField;
 	final JTextField firstNameTextField, surnameTextField, accountTypeTextField, balanceTextField, overdraftTextField;
 	
-	CreateBankDialog(HashMap accounts) {
+	CreateBankDialog(HashMap<Integer, BankAccount> table) {
 		
 		super("Add Bank Details");
-		
-		table = accounts;
 		
 		setLayout(new BorderLayout());
 		
