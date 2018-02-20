@@ -11,16 +11,13 @@ import net.miginfocom.swing.MigLayout;
 
 public class CreateBankDialog extends JFrame {
 
-	
+	private static final long serialVersionUID = 1L;
 	private final static int TABLE_SIZE = 29;
 	Random rand = new Random();
 	
 	ArrayList<BankAccount> accountList;
 
 	HashMap<Integer, BankAccount> table = new HashMap<Integer, BankAccount>();
-	
-	
-	
 	
 	public void put(int key, BankAccount value){
 		int hash = (key%TABLE_SIZE);
@@ -30,9 +27,6 @@ public class CreateBankDialog extends JFrame {
 		}
 		table.put(hash, value);
 	}
-	
-	
-	
 	
 	// Constructor code based on that for the Create and Edit dialog classes in the Shapes exercise.
 
@@ -49,13 +43,7 @@ public class CreateBankDialog extends JFrame {
 		
 		setLayout(new BorderLayout());
 		
-		JPanel dataPanel = new JPanel(new MigLayout());
-		
-		
-		
-		
-		
-		
+		JPanel dataPanel = new JPanel(new MigLayout());		
 		
 		String[] comboTypes = {"Current", "Deposit"};
 		
@@ -154,16 +142,10 @@ public class CreateBankDialog extends JFrame {
 						
 						
 							BankAccount account = new BankAccount(randNumber, accountNumber, surname, firstName, accountType, 0.0, 0.0);
-						
-							
 							int key = Integer.parseInt(account.getAccountNumber());
 							
-							int hash = (key%TABLE_SIZE);
-							
-							while(table.containsKey(hash)){
-								hash = hash+1;
-							}
-							table.put(hash, account);
+							put(key,account);
+								
 						}
 						else{
 							JOptionPane.showMessageDialog(null, "Account Number must be unique");
