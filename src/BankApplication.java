@@ -1,38 +1,34 @@
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+import java.awt.*;
+import java.io.*;
+import java.util.*;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-
-import java.util.*;
-import java.io.*;
-import java.awt.*;
-
 
 import net.miginfocom.swing.MigLayout;
 
 public class BankApplication extends JFrame {
-	
+
 	private static final long serialVersionUID = 1L;
 	ArrayList<BankAccount> accountList = new ArrayList<BankAccount>();
-	static HashMap<Integer, BankAccount> table = new HashMap<Integer, BankAccount>();
+	private static HashMap<Integer, BankAccount> table = new HashMap<Integer, BankAccount>();
 	private final static int TABLE_SIZE = 29;
-
 	
-	JMenuBar menuBar;
-	JMenu navigateMenu, recordsMenu, transactionsMenu, fileMenu, exitMenu;
-	JMenuItem nextItem, prevItem, firstItem, lastItem, findByAccount, findBySurname, listAll;
-	JMenuItem createItem, modifyItem, deleteItem, setOverdraft, setInterest;
-	JMenuItem deposit, withdraw, calcInterest;
-	JMenuItem open, save, saveAs;
-	JMenuItem closeApp;
-	JButton firstItemButton, lastItemButton, nextItemButton, prevItemButton;
-	JLabel accountIDLabel, accountNumberLabel, firstNameLabel, surnameLabel, accountTypeLabel, balanceLabel, overdraftLabel;
-	JTextField accountIDTextField, accountNumberTextField, firstNameTextField, surnameTextField, accountTypeTextField, balanceTextField, overdraftTextField;
-	static JFileChooser fc;
-	JTable jTable;
-	double interestRate;
+	private JMenuBar menuBar;
+	private JMenu navigateMenu, recordsMenu, transactionsMenu, fileMenu, exitMenu;
+	private JMenuItem nextItem, prevItem, firstItem, lastItem, findByAccount, findBySurname, listAll;
+	private JMenuItem createItem, modifyItem, deleteItem, setOverdraft, setInterest;
+	private JMenuItem deposit, withdraw, calcInterest;
+	private JMenuItem open, save, saveAs;
+	private JMenuItem closeApp;
+	private JButton firstItemButton, lastItemButton, nextItemButton, prevItemButton;
+	private JLabel accountIDLabel, accountNumberLabel, firstNameLabel, surnameLabel, accountTypeLabel, balanceLabel, overdraftLabel;
+	private JTextField accountIDTextField, accountNumberTextField, firstNameTextField, surnameTextField, accountTypeTextField, balanceTextField, overdraftTextField;
+	private static JFileChooser fc;
+	private JTable jTable;
+	private double interestRate;
 	
 	int currentItem = 0;
 	
@@ -552,8 +548,6 @@ public class BankApplication extends JFrame {
 	
 	private static RandomAccessFile input;
 	private static RandomAccessFile output;
-
-	
 	public static void openFileRead()
 	   {
 		
