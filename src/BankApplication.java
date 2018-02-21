@@ -663,15 +663,7 @@ public class BankApplication extends JFrame {
 	            
 	            Integer key = Integer.valueOf(ba.getAccountNumber().trim());
 			
-				int hash = (key%TABLE_SIZE);
-		
-				
-				while(table.containsKey(hash)){
-			
-					hash = hash+1;
-				}
-				
-	            table.put(hash, ba);
+	            put(key, ba);
 		
 
 	         } // end while
@@ -734,7 +726,7 @@ public static void saveToFile(){
 	    closeFile();		
 	}
 	
-	public void put(int key, BankAccount value){
+	public static void put(int key, BankAccount value){
 		int hash = (key%TABLE_SIZE);
 	
 		while(table.containsKey(key)){

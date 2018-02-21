@@ -1,7 +1,7 @@
 
 public class BankAccount {
 	
-	private int accountID;
+	private  int accountID;
 	private String accountNumber;
 	private String surname;
 	private String firstName;
@@ -22,7 +22,6 @@ public class BankAccount {
 	}
 	
 	public BankAccount(){
-		this(0, "", "", "", "", 0.0, 0.0);
 	}
 
 	public int getAccountID() {
