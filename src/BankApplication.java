@@ -30,10 +30,9 @@ public class BankApplication extends JFrame {
 	private JTable jTable;
 	private double interestRate;
 	
-	int currentItem = 0;
+	private int currentItem = 0;
 	
-	
-	boolean openValues;
+	private boolean openValues;
 	
 	public BankApplication() {
 		
@@ -100,7 +99,7 @@ public class BankApplication extends JFrame {
 		JPanel buttonPanel = new JPanel(new GridLayout(1, 4));
 
 		nextItemButton = new JButton(new ImageIcon("next.png"));
-		prevItemButton = new JButton(new ImageIcon("previous.png"));
+		prevItemButton = new JButton(new ImageIcon("prev.png"));
 		firstItemButton = new JButton(new ImageIcon("first.png"));
 		lastItemButton = new JButton(new ImageIcon("last.png"));
 		
@@ -297,7 +296,6 @@ public class BankApplication extends JFrame {
 							table.remove(currentItem);
 							JOptionPane.showMessageDialog(null, "Account Deleted");
 							
-
 							currentItem=0;
 							while(!table.containsKey(currentItem)){
 								currentItem++;
@@ -318,14 +316,12 @@ public class BankApplication extends JFrame {
 			public void actionPerformed(ActionEvent e){
 				surnameTextField.setEditable(true);
 				firstNameTextField.setEditable(true);
-				
 				openValues = true;
 			}
 		});
 		
 		setInterest.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
-				
 				 String interestRateStr = JOptionPane.showInputDialog("Enter Interest Rate: (do not type the % sign)");
 				 if(interestRateStr!=null)
 					 interestRate = Double.parseDouble(interestRateStr);

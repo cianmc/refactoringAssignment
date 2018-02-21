@@ -9,8 +9,6 @@ public class BankAccount {
 	private double balance;
 	private double overdraft;
 	
-	public static int count = 0;
-	
 	public BankAccount(int accountID, String accountNumber, String surname, String firstName, String accountType, double balance, double overdraft){
 		this.accountID = accountID;
 		this.accountNumber = accountNumber;
@@ -78,10 +76,6 @@ public class BankAccount {
 	
 	public void setOverdraft(double overdraft) {
 		this.overdraft = overdraft;
-	}
-	
-	public String toString(){
-		return "\nAccount id: " + accountID +  "Account Num: " + accountNumber + "\nName: " + surname + " " + firstName+"\n";
 	}
 
 }
