@@ -36,12 +36,8 @@ public class CreateBankDialog extends JFrame {
 		
 		comboBox = new JComboBox<>(comboTypes);
 		
-		
-		accountNumberLabel = new JLabel("Photograph file name: ");
-		accountNumberTextField = new JTextField(15);
-		
 		accountNumberLabel = new JLabel("Account Number: ");
-		accountNumberTextField = new JTextField(15);
+		accountNumberTextField = new JTextField(8);
 		accountNumberTextField.setEditable(true);
 		
 		dataPanel.add(accountNumberLabel, "growx, pushx");
@@ -103,17 +99,17 @@ public class CreateBankDialog extends JFrame {
 				String firstName = firstNameTextField.getText();
 				String accountType = comboBox.getSelectedItem().toString();
 
-				if (accountNumber != null && accountNumber.length()==8 && surname != null && firstName != null && accountType != null) {
+				if (accountNumber != null && accountNumber.length()<= 8 && !accountNumber.contains("-") && surname != null && firstName != null && accountType != null) {
 					try {
 						
 						boolean accNumTaken=false;
 							
-							int accNum = 1;
+							int accID = 1;
 						
 						 for (Map.Entry<Integer, BankAccount> entry : table.entrySet()) {
 							 
-							 while(accNum == entry.getValue().getAccountID()){
-								 accNum++;
+							 while(accID == entry.getValue().getAccountID()){
+								 accID++;
 							 }		 
 						 }
 					 
@@ -126,7 +122,7 @@ public class CreateBankDialog extends JFrame {
 						
 						if(!accNumTaken){
 						
-							BankAccount account = new BankAccount(accNum, accountNumber, surname, firstName, accountType, 0.0, 0.0);
+							BankAccount account = new BankAccount(accID, accountNumber, surname, firstName, accountType, 0.0, 0.0);
 						
 							int key = Integer.parseInt(account.getAccountNumber());
 							

@@ -36,7 +36,10 @@ public class BankRecordFunctions extends BankApplication{
 	
 	public static void setIntrest() {
 		String interestRateStr = JOptionPane.showInputDialog("Enter Interest Rate: (do not type the % sign)");
-		if(interestRateStr!=null)
-			interestRate = Double.parseDouble(interestRateStr);
-	}
+			if (interestRateStr!=null && !interestRateStr.equals("0") && !interestRateStr.contains("-")) {
+				interestRate = Double.parseDouble(interestRateStr);
+			} else JOptionPane.showMessageDialog(null, "Intrest rate cannot be 0% or a minus number", "ERROR", JOptionPane.ERROR_MESSAGE);
+		}
+
+	
 }

@@ -85,10 +85,13 @@ public class BankNavigateFunctions extends BankApplication{
 
 			}			 
 		}
-		if(found)
+		if(found) {
 			JOptionPane.showMessageDialog(null, "Account number " + accNum + " found.");
-		else
+		} else if ( accNum == null || (accNum != null && ("".equals(accNum)))) {
+			JOptionPane.showMessageDialog(null, "No account number entered", "ERROR", JOptionPane.ERROR_MESSAGE);	
+		} else {
 			JOptionPane.showMessageDialog(null, "Account number " + accNum + " not found.");
+		}
 	}
 
 	// find account by surname
@@ -109,16 +112,18 @@ public class BankNavigateFunctions extends BankApplication{
 				overdraftTextField.setText(entry.getValue().getOverdraft()+"");
 			}
 		}		
-		if(found)
-			JOptionPane.showMessageDialog(null, "Surname  " + sName + " found.");
-		else
+		if(found) {
+			JOptionPane.showMessageDialog(null, "Surname " + sName + " found.");
+		} else if ( sName == null || (sName != null && ("".equals(sName)))) {
+			JOptionPane.showMessageDialog(null, "No surname entered", "ERROR", JOptionPane.ERROR_MESSAGE);	
+		} else {
 			JOptionPane.showMessageDialog(null, "Surname " + sName + " not found.");
+		}
 	}
 
 	// list all the records in a table
 	public static void listAllRecords() {
 		JFrame frame = new JFrame("TableDemo");
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		String col[] = {"ID","Number","Name", "Account Type", "Balance", "Overdraft"};
 
