@@ -1,5 +1,4 @@
 
-import java.util.*;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
@@ -9,84 +8,59 @@ public class BankNavigateFunctions extends BankApplication{
 
 	// Navigate to first item in HashMap
 	public static void firstItem() {
-		if(table.isEmpty()) {
+		if(accountList.isEmpty()) {
 			JOptionPane.showMessageDialog(null, "No Accounts selected, please open or create a bank account", "WARNING", JOptionPane.WARNING_MESSAGE);
 		} else {
 			saveOpenValues();
 			currentItem=0;
-			while(!table.containsKey(currentItem)){
-				currentItem++;
-			}
+			accountList.get(currentItem);
 			displayDetails(currentItem);
 		}
-
-
 	}
 
 	// Navigate to last item in HashMap
 	public static void lastItem() {
-		if(table.isEmpty()) {
+		if(accountList.isEmpty()) {
 			JOptionPane.showMessageDialog(null, "No Accounts selected, please open or create a bank account", "WARNING", JOptionPane.WARNING_MESSAGE);
 		} else {
 			saveOpenValues();
-			currentItem =29;
-			while(!table.containsKey(currentItem)){
-				currentItem--;
-			}
+			currentItem = accountList.size() -1;
+			accountList.get(currentItem);
 			displayDetails(currentItem);
 		}
 	}
 
 	// Navigate to next item in HashMap
 	public static void nextItem() {
-		if(table.isEmpty()) {
+		if(accountList.isEmpty()) {
 			JOptionPane.showMessageDialog(null, "No Accounts selected, please open or create a bank account", "WARNING", JOptionPane.WARNING_MESSAGE);
 		} else {
-			ArrayList<Integer> keyList = new ArrayList<Integer>();
-			int i=0;
-			while(i<TABLE_SIZE){
-				i++;
-				if(table.containsKey(i))
-					keyList.add(i);
-			}
-			int maxKey = Collections.max(keyList);
-			saveOpenValues();	
-			if(currentItem<maxKey){
+			saveOpenValues();
+			if (currentItem < (accountList.size() - 1)) {
 				currentItem++;
-				while(!table.containsKey(currentItem)){
-					currentItem++;
-				}
 			}
+			accountList.get(currentItem);
 			displayDetails(currentItem);
 		}
 	}
 
 	// Navigate to previous item in HashMap
 	public static void previousItem() {
-		if(table.isEmpty()) {
+		if(accountList.isEmpty()) {
 			JOptionPane.showMessageDialog(null, "No Accounts selected, please open or create a bank account", "WARNING", JOptionPane.WARNING_MESSAGE);
 		} else {
-			ArrayList<Integer> keyList = new ArrayList<Integer>();
-			int i=0;
-			while(i<TABLE_SIZE){
-				i++;
-				if(table.containsKey(i))
-					keyList.add(i);
-			}
-			int minKey = Collections.min(keyList);
-			if(currentItem>minKey){
+			saveOpenValues();
+			if (currentItem > 0) {
 				currentItem--;
-				while(!table.containsKey(currentItem)){
-					currentItem--;
-				}
 			}
+			accountList.get(currentItem);
 			displayDetails(currentItem);
 		}
 	}
 
 	// find account by account number
 	public static void findByAccountNumber() {
-		if(table.isEmpty()) {
+		if(accountList.isEmpty()) {
 			JOptionPane.showMessageDialog(null, "No Accounts selected, please open or create a bank account", "WARNING", JOptionPane.WARNING_MESSAGE);
 		} else {
 			String accNum = JOptionPane.showInputDialog("Search for account number: ");
@@ -94,19 +68,16 @@ public class BankNavigateFunctions extends BankApplication{
 			if ( accNum == null || (accNum != null && ("".equals(accNum)))) {
 				JOptionPane.showMessageDialog(null, "No account number entered", "ERROR", JOptionPane.ERROR_MESSAGE);
 			}else {
-
-				for (Map.Entry<Integer, BankAccount> entry : table.entrySet()) {
-
-					if(accNum.equals(entry.getValue().getAccountNumber().trim())){
+				for (BankAccount ba : accountList) {
+					if(accNum.equals(ba.getAccountNumber().trim())){
 						found = true;
-						accountIDTextField.setText(entry.getValue().getAccountID()+"");
-						accountNumberTextField.setText(entry.getValue().getAccountNumber());
-						surnameTextField.setText(entry.getValue().getSurname());
-						firstNameTextField.setText(entry.getValue().getFirstName());
-						accountTypeTextField.setText(entry.getValue().getAccountType());
-						balanceTextField.setText(entry.getValue().getBalance()+"");
-						overdraftTextField.setText(entry.getValue().getOverdraft()+"");						
-
+						accountIDTextField.setText(ba.getAccountID()+"");
+						accountNumberTextField.setText(ba.getAccountNumber());
+						surnameTextField.setText(ba.getSurname());
+						firstNameTextField.setText(ba.getFirstName());
+						accountTypeTextField.setText(ba.getAccountType());
+						balanceTextField.setText(ba.getBalance()+"");
+						overdraftTextField.setText(ba.getOverdraft()+"");						
 					}			 
 				}
 				if(found) {
@@ -120,7 +91,7 @@ public class BankNavigateFunctions extends BankApplication{
 
 	// find account by surname
 	public static void findBySurname() {
-		if(table.isEmpty()) {
+		if(accountList.isEmpty()) {
 			JOptionPane.showMessageDialog(null, "No Accounts selected, please open or create a bank account", "WARNING", JOptionPane.WARNING_MESSAGE);
 		} else {
 			String sName = JOptionPane.showInputDialog("Search for surname: ");
@@ -128,17 +99,16 @@ public class BankNavigateFunctions extends BankApplication{
 			if ( sName == null || (sName != null && ("".equals(sName)))) {
 				JOptionPane.showMessageDialog(null, "No surname entered", "ERROR", JOptionPane.ERROR_MESSAGE);
 			}else {
-				for (Map.Entry<Integer, BankAccount> entry : table.entrySet()) {
-
-					if(sName.equalsIgnoreCase((entry.getValue().getSurname().trim()))){
+				for (BankAccount ba : accountList) {
+					if(sName.equalsIgnoreCase(ba.getSurname().trim())){
 						found = true;
-						accountIDTextField.setText(entry.getValue().getAccountID()+"");
-						accountNumberTextField.setText(entry.getValue().getAccountNumber());
-						surnameTextField.setText(entry.getValue().getSurname());
-						firstNameTextField.setText(entry.getValue().getFirstName());
-						accountTypeTextField.setText(entry.getValue().getAccountType());
-						balanceTextField.setText(entry.getValue().getBalance()+"");
-						overdraftTextField.setText(entry.getValue().getOverdraft()+"");
+						accountIDTextField.setText(ba.getAccountID()+"");
+						accountNumberTextField.setText(ba.getAccountNumber());
+						surnameTextField.setText(ba.getSurname());
+						firstNameTextField.setText(ba.getFirstName());
+						accountTypeTextField.setText(ba.getAccountType());
+						balanceTextField.setText(ba.getBalance()+"");
+						overdraftTextField.setText(ba.getOverdraft()+"");
 					}
 				}		
 				if(found) {
@@ -152,7 +122,7 @@ public class BankNavigateFunctions extends BankApplication{
 
 	// list all the records in a table
 	public static void listAllRecords() {
-		if(table.isEmpty()) {
+		if(accountList.isEmpty()) {
 			JOptionPane.showMessageDialog(null, "No Accounts selected, please open or create a bank account", "WARNING", JOptionPane.WARNING_MESSAGE);
 		} else {
 			JFrame frame = new JFrame("TableDemo");
@@ -164,12 +134,12 @@ public class BankNavigateFunctions extends BankApplication{
 			JScrollPane scrollPane = new JScrollPane(jTable);
 			jTable.setAutoCreateRowSorter(true);
 
-			for (Map.Entry<Integer, BankAccount> entry : table.entrySet()) {
+			for (BankAccount ba : accountList) {
 
-				Object[] objs = {entry.getValue().getAccountID(), entry.getValue().getAccountNumber(), 
-						entry.getValue().getFirstName().trim() + " " + entry.getValue().getSurname().trim(), 
-						entry.getValue().getAccountType(), entry.getValue().getBalance(), 
-						entry.getValue().getOverdraft()};
+				Object[] objs = {ba.getAccountID(), ba.getAccountNumber(), 
+						ba.getFirstName().trim() + " " + ba.getSurname().trim(), 
+						ba.getAccountType(), ba.getBalance(), 
+						ba.getOverdraft()};
 
 				tableModel.addRow(objs);
 			}

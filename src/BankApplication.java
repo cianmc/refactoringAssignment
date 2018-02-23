@@ -9,9 +9,7 @@ import net.miginfocom.swing.MigLayout;
 public class BankApplication extends JFrame {
 
 	private static final long serialVersionUID = 1L;
-	ArrayList<BankAccount> accountList = new ArrayList<BankAccount>();
-	protected static HashMap<Integer, BankAccount> table = new HashMap<Integer, BankAccount>();
-	protected final static int TABLE_SIZE = 29;
+	static ArrayList<BankAccount> accountList = new ArrayList<BankAccount>();
 
 	private JMenuBar menuBar;
 	private JMenu navigateMenu, recordsMenu, transactionsMenu, fileMenu, exitMenu;
@@ -173,8 +171,6 @@ public class BankApplication extends JFrame {
 
 		menuBar.add(exitMenu);
 
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
-
 		// Navigation Action Listeners
 		ActionListener first = new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -199,7 +195,7 @@ public class BankApplication extends JFrame {
 				BankNavigateFunctions.lastItem();
 			}
 		};
-		
+
 		findBySurname.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				BankNavigateFunctions.findBySurname();
@@ -211,7 +207,7 @@ public class BankApplication extends JFrame {
 				BankNavigateFunctions.findByAccountNumber();
 			}
 		});
-		
+
 		listAll.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				BankNavigateFunctions.listAllRecords();
@@ -243,13 +239,13 @@ public class BankApplication extends JFrame {
 				BankRecordFunctions.modifyItem();
 			}
 		});
-		
+
 		deleteItem.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				BankRecordFunctions.deleteItem();
 			}
 		});
-		
+
 		setOverdraft.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				BankRecordFunctions.setOverdraft();
@@ -261,7 +257,7 @@ public class BankApplication extends JFrame {
 				BankRecordFunctions.setIntrest();
 			}
 		});
-		
+
 		// Transactions Action Listeners
 		deposit.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
@@ -280,7 +276,7 @@ public class BankApplication extends JFrame {
 				BankTransactionsFunctions.calculateIntrest();
 			}
 		});	
-		
+
 		// File Action Listeners
 		open.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
@@ -303,15 +299,19 @@ public class BankApplication extends JFrame {
 		// Exit Action Listeners
 		closeApp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(!table.isEmpty()) {
-				int answer = JOptionPane.showConfirmDialog(BankApplication.this, "Do you want to save before quitting?");
-				if (answer == JOptionPane.YES_OPTION) {
-					BankFileFunctions.saveFileAs();
+				if(accountList.isEmpty()) {
 					dispose();
-				}else if(answer == JOptionPane.NO_OPTION)
-					dispose();
+				}else {
+					int answer = JOptionPane.showConfirmDialog(BankApplication.this, "Do you want to save before quitting?");
+					if (answer == JOptionPane.YES_OPTION) {
+						BankFileFunctions.saveFileAs();
+						dispose();
+					}else if(answer == JOptionPane.NO_OPTION) {
+						dispose();
+					}else if(answer == JOptionPane.CANCEL_OPTION) {
+						JOptionPane.showMessageDialog(null, "Cancelled", "NOTICE", JOptionPane.INFORMATION_MESSAGE);
+					}
 				}
-				dispose();
 			}
 		});	
 	}// end of initCompnents
@@ -322,24 +322,16 @@ public class BankApplication extends JFrame {
 	}
 
 	public static void displayDetails(Integer currentItem) {
-		accountIDTextField.setText(table.get(currentItem).getAccountID()+"");
-		accountNumberTextField.setText(table.get(currentItem).getAccountNumber());
-		surnameTextField.setText(table.get(currentItem).getSurname());
-		firstNameTextField.setText(table.get(currentItem).getFirstName());
-		accountTypeTextField.setText(table.get(currentItem).getAccountType());
-		balanceTextField.setText(table.get(currentItem).getBalance()+"");
+		accountIDTextField.setText(accountList.get(currentItem).getAccountID()+"");
+		accountNumberTextField.setText(accountList.get(currentItem).getAccountNumber());
+		surnameTextField.setText(accountList.get(currentItem).getSurname());
+		firstNameTextField.setText(accountList.get(currentItem).getFirstName());
+		accountTypeTextField.setText(accountList.get(currentItem).getAccountType());
+		balanceTextField.setText(accountList.get(currentItem).getBalance()+"");
 		if(accountTypeTextField.getText().trim().equals("Current"))
-			overdraftTextField.setText(table.get(currentItem).getOverdraft()+"");
+			overdraftTextField.setText(accountList.get(currentItem).getOverdraft()+"");
 		else
 			overdraftTextField.setText("Only applies to current accs");
-	}
-
-	public static void put(int key, BankAccount value){
-		int hash = (key%TABLE_SIZE);
-		while(table.containsKey(key)){
-			hash = hash+1;
-		}
-		table.put(hash, value);
 	}
 
 	public static void main(String[] args) {

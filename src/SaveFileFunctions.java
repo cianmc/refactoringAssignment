@@ -1,11 +1,5 @@
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.RandomAccessFile;
-import java.util.Map;
-
-import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
+import javax.swing.*;
+import java.io.*;
 
 public class SaveFileFunctions extends BankFileFunctions {
 
@@ -16,8 +10,8 @@ public class SaveFileFunctions extends BankFileFunctions {
 			surnameTextField.setEditable(false);
 			firstNameTextField.setEditable(false);
 				
-			table.get(currentItem).setSurname(surnameTextField.getText());
-			table.get(currentItem).setFirstName(firstNameTextField.getText());
+			accountList.get(currentItem).setSurname(surnameTextField.getText());
+			accountList.get(currentItem).setFirstName(firstNameTextField.getText());
 		}
 	}
 	
@@ -48,14 +42,14 @@ public class SaveFileFunctions extends BankFileFunctions {
 
 		RandomAccessBankAccount record = new RandomAccessBankAccount();
 
-		for (Map.Entry<Integer, BankAccount> entry : table.entrySet()) {
-			record.setAccountID(entry.getValue().getAccountID());
-			record.setAccountNumber(entry.getValue().getAccountNumber());
-			record.setFirstName(entry.getValue().getFirstName());
-			record.setSurname(entry.getValue().getSurname());
-			record.setAccountType(entry.getValue().getAccountType());
-			record.setBalance(entry.getValue().getBalance());
-			record.setOverdraft(entry.getValue().getOverdraft());
+		for (BankAccount ba : accountList) {
+			record.setAccountID(ba.getAccountID());
+			record.setAccountNumber(ba.getAccountNumber());
+			record.setFirstName(ba.getFirstName());
+			record.setSurname(ba.getSurname());
+			record.setAccountType(ba.getAccountType());
+			record.setBalance(ba.getBalance());
+			record.setOverdraft(ba.getOverdraft());
 
 			if(output!=null){
 

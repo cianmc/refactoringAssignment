@@ -21,11 +21,9 @@ public class ReadFileFunctions extends BankFileFunctions{
 	            BankAccount ba = new BankAccount(record.getAccountID(), record.getAccountNumber(), record.getFirstName(),
 	                    record.getSurname(), record.getAccountType(), record.getBalance(), record.getOverdraft());
 	            
-	            Integer key = Integer.valueOf(ba.getAccountNumber().trim());
-			
-	            put(key, ba);
+	            accountList.add(ba);
 		
-	         } // end while
+	        } // end while
 	      } // end try
 	      catch ( EOFException eofException ) // close file
 	      {

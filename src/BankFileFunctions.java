@@ -12,7 +12,7 @@ public class BankFileFunctions extends BankApplication{
 	protected static String fileToSaveAs = "";
 
 	public static void writeFile(){
-		if(table.isEmpty()) {
+		if(accountList.isEmpty()) {
 			JOptionPane.showMessageDialog(null, "No Accounts selected, please open or create a bank account", "WARNING", JOptionPane.WARNING_MESSAGE);
 		} else {
 		OpenFileFunctions.openFileWrite();
@@ -22,7 +22,7 @@ public class BankFileFunctions extends BankApplication{
 	}
 
 	public static void saveFileAs(){
-		if(table.isEmpty()) {
+		if(accountList.isEmpty()) {
 			JOptionPane.showMessageDialog(null, "No Accounts selected, please open or create a bank account", "WARNING", JOptionPane.WARNING_MESSAGE);
 		} else {
 		SaveFileFunctions.saveToFileAs();
@@ -39,9 +39,6 @@ public class BankFileFunctions extends BankApplication{
 	public static void openFile() {
 		readFile();
 		currentItem=0;
-		while(!table.containsKey(currentItem)){
-			currentItem++;
-		}
 		displayDetails(currentItem);
 	}
 

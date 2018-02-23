@@ -1,4 +1,3 @@
-import java.util.Map;
 import javax.swing.JOptionPane;
 
 public class BankTransactionsFunctions extends BankApplication {
@@ -6,7 +5,7 @@ public class BankTransactionsFunctions extends BankApplication {
 	private static final long serialVersionUID = 1L;
 
 	public static void deposit() {
-		if(table.isEmpty()) {
+		if(accountList.isEmpty()) {
 			JOptionPane.showMessageDialog(null, "No Accounts selected, please open or create a bank account", "WARNING", JOptionPane.WARNING_MESSAGE);
 		} else {
 			String accNum = JOptionPane.showInputDialog("Account number to deposit into: ");
@@ -14,16 +13,16 @@ public class BankTransactionsFunctions extends BankApplication {
 			if ( accNum == null || (accNum != null && ("".equals(accNum)))) {
 				JOptionPane.showMessageDialog(null, "No account number entered", "ERROR", JOptionPane.ERROR_MESSAGE);
 			}else {
-				for (Map.Entry<Integer, BankAccount> entry : table.entrySet()) {
-					if(accNum.equals(entry.getValue().getAccountNumber().trim())){
+				for (BankAccount ba : accountList) {
+					if(accNum.equals(ba.getAccountNumber().trim())){
 						found = true;
 						String toDeposit = JOptionPane.showInputDialog("Account found, Enter Amount to Deposit: ");
 						if ( toDeposit == null || (toDeposit != null && ("".equals(toDeposit)))) {
 							JOptionPane.showMessageDialog(null, "No deposit ammount entered", "ERROR", JOptionPane.ERROR_MESSAGE);
 						}else {
 							if (!toDeposit.contains("-")) {
-								entry.getValue().setBalance(entry.getValue().getBalance() + Double.parseDouble(toDeposit));
-								displayDetails(entry.getKey());
+								ba.setBalance(ba.getBalance() + Double.parseDouble(toDeposit));
+								displayDetails(currentItem);
 							} else JOptionPane.showMessageDialog(null, "You cannot deposit a negative number", "ERROR", JOptionPane.ERROR_MESSAGE);
 						}if (!found) {
 							JOptionPane.showMessageDialog(null, "Account number " + accNum + " not found.");
@@ -36,7 +35,7 @@ public class BankTransactionsFunctions extends BankApplication {
 
 
 	public static void withdraw() {
-		if(table.isEmpty()) {
+		if(accountList.isEmpty()) {
 			JOptionPane.showMessageDialog(null, "No Accounts selected, please open or create a bank account", "WARNING", JOptionPane.WARNING_MESSAGE);
 		} else {
 			String accNum = JOptionPane.showInputDialog("Account number to withdraw from: ");
@@ -44,26 +43,26 @@ public class BankTransactionsFunctions extends BankApplication {
 			if ( accNum == null || (accNum != null && ("".equals(accNum)))) {
 				JOptionPane.showMessageDialog(null, "No account number entered", "ERROR", JOptionPane.ERROR_MESSAGE);
 			} else {
-				for (Map.Entry<Integer, BankAccount> entry : table.entrySet()) {
-					if(accNum.equals(entry.getValue().getAccountNumber().trim())){
+				for (BankAccount ba : accountList) {
+					if(accNum.equals(ba.getAccountNumber().trim())){
 						String toWithdraw = JOptionPane.showInputDialog("Account found, Enter Amount to Withdraw: ");
 						if ( toWithdraw == null || (toWithdraw != null && ("".equals(toWithdraw)))) {
 							JOptionPane.showMessageDialog(null, "No deposit ammount entered", "ERROR", JOptionPane.ERROR_MESSAGE);
 						}else {
 							if (!toWithdraw.contains("-")) {
 								found = true;
-								if(entry.getValue().getAccountType().trim().equals("Current")){
-									if(Double.parseDouble(toWithdraw) > entry.getValue().getBalance() + entry.getValue().getOverdraft())
+								if(ba.getAccountType().trim().equals("Current")){
+									if(Double.parseDouble(toWithdraw) > ba.getBalance() + ba.getOverdraft())
 										JOptionPane.showMessageDialog(null, "Transaction exceeds overdraft limit");
 									else{
-										entry.getValue().setBalance(entry.getValue().getBalance() - Double.parseDouble(toWithdraw));
-										displayDetails(entry.getKey());
+										ba.setBalance(ba.getBalance() - Double.parseDouble(toWithdraw));
+										displayDetails(currentItem);
 									}
 								}
-								else if(entry.getValue().getAccountType().trim().equals("Deposit")){
-									if(Double.parseDouble(toWithdraw) <= entry.getValue().getBalance()){
-										entry.getValue().setBalance(entry.getValue().getBalance()-Double.parseDouble(toWithdraw));
-										displayDetails(entry.getKey());
+								else if(ba.getAccountType().trim().equals("Deposit")){
+									if(Double.parseDouble(toWithdraw) <= ba.getBalance()){
+										ba.setBalance(ba.getBalance()-Double.parseDouble(toWithdraw));
+										displayDetails(currentItem);
 									}
 									else
 										JOptionPane.showMessageDialog(null, "Insufficient funds.");
@@ -83,16 +82,16 @@ public class BankTransactionsFunctions extends BankApplication {
 	}
 
 	public static void calculateIntrest() {
-		if(table.isEmpty()) {
+		if(accountList.isEmpty()) {
 			JOptionPane.showMessageDialog(null, "No Accounts selected, please open or create a bank account", "WARNING", JOptionPane.WARNING_MESSAGE);
 		}else {
 			if(!(interestRate == 0)) {
-				for (Map.Entry<Integer, BankAccount> entry : table.entrySet()) {
-					if(entry.getValue().getAccountType().equals("Deposit")){
+				for (BankAccount ba : accountList) {
+					if(ba.getAccountType().equals("Deposit")){
 						double equation = 1 + ((interestRate)/100);
-						entry.getValue().setBalance(entry.getValue().getBalance()*equation);
+						ba.setBalance(ba.getBalance()*equation);
 						JOptionPane.showMessageDialog(null, "Balances Updated");
-						displayDetails(entry.getKey());
+						displayDetails(currentItem);
 					}
 				}
 			}

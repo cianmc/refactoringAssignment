@@ -1,20 +1,17 @@
-import java.io.IOException;
-import java.io.RandomAccessFile;
-
-import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
+import javax.swing.*;
+import java.io.*;
 
 public class OpenFileFunctions extends BankFileFunctions{
 
 	private static final long serialVersionUID = 1L;
 	
 	public static void openFileRead() {
-		table.clear();
+		accountList.clear();
 		fc = new JFileChooser();
 		int returnVal = fc.showOpenDialog(null);
 
-		if (returnVal == JFileChooser.APPROVE_OPTION) {
-			
+		if (returnVal == JFileChooser.CANCEL_OPTION) {
+			JOptionPane.showMessageDialog(null, "Cancelled");
 		} else {
 		} try {
 			if(fc.getSelectedFile()!=null)

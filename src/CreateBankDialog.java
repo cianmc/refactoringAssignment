@@ -1,5 +1,4 @@
 
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.*;
@@ -11,22 +10,19 @@ import net.miginfocom.swing.MigLayout;
 public class CreateBankDialog extends JFrame {
 
 	private static final long serialVersionUID = 1L;
-	private final static int TABLE_SIZE = 29;
 
 	ArrayList<BankAccount> accountList;
-
-	private HashMap<Integer, BankAccount> table = new HashMap<Integer, BankAccount>();
 
 	private JLabel accountNumberLabel, firstNameLabel, surnameLabel, accountTypeLabel, balanceLabel, overdraftLabel;
 	private JComboBox<String> comboBox;
 	private JTextField accountNumberTextField;
 	private final JTextField firstNameTextField, surnameTextField, accountTypeTextField, balanceTextField, overdraftTextField;
 
-	public CreateBankDialog(HashMap<Integer, BankAccount> accounts) {
+	public CreateBankDialog(ArrayList<BankAccount> accounts) {
 
 		super("Add Bank Details");
 
-		table = accounts;
+		accountList = accounts;
 
 		setLayout(new BorderLayout());
 
@@ -100,48 +96,43 @@ public class CreateBankDialog extends JFrame {
 				String accountType = comboBox.getSelectedItem().toString();
 
 				if(surname.isEmpty() || firstName.isEmpty()) {
-					JOptionPane.showMessageDialog(null, "Please enter ing both your firstname and surname", "WARNING", JOptionPane.WARNING_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Please enter in both your firstname and surname", "WARNING", JOptionPane.WARNING_MESSAGE);
 				}else{
-					if (accountNumber != null && accountNumber.length()<= 8 && !accountNumber.contains("-") && surname != null && firstName != null && accountType != null) {
-						try {
-
+					int accNum = Integer.parseInt(accountNumber);
+					if(accNum <= 0) {
+						JOptionPane.showMessageDialog(null, "Account number cannot be 0 or a negative number", "WARNING", JOptionPane.WARNING_MESSAGE);
+					}else accountNumber = Integer.toString(accNum);
+					if (accountNumber == null || !(accountNumber.length()== 8)) {
+						JOptionPane.showMessageDialog(null, "Account Number needs to be a unique 8 digit number");
+					} else {
 							boolean accNumTaken=false;
-
 							int accID = 1;
-
-							for (Map.Entry<Integer, BankAccount> entry : table.entrySet()) {
-
-								while(accID == entry.getValue().getAccountID()){
-									accID++;
-								}		 
+							
+							if (!accountList.isEmpty()) {
+							BankAccount ba = accountList.get(accountList.size()-1);
+							int checkAcc = ba.getAccountID();
+							while(checkAcc == accID) {
+								accID++;
+								}
 							}
-
-							for (Map.Entry<Integer, BankAccount> entry : table.entrySet()) {					
-								if(entry.getValue().getAccountNumber().trim().equals(accountNumberTextField.getText())){
+							for (BankAccount bA : accountList) {					
+								if(bA.getAccountNumber().trim().equals(accountNumberTextField.getText())){
 									accNumTaken=true;	
-
 								}
 							}
 
 							if(!accNumTaken){
-
 								BankAccount account = new BankAccount(accID, accountNumber, surname, firstName, accountType, 0.0, 0.0);
-								int key = Integer.parseInt(account.getAccountNumber());
-								put(key, account);	
+								accountList.add(account);
 								BankNavigateFunctions.firstItem();
+								dispose();
 							}
 							else{
 								JOptionPane.showMessageDialog(null, "Account Number must be unique");
 							}
 						}
-						catch (Exception ex) {
-							JOptionPane.showMessageDialog(null, "Number format exception");					
-						}
 					}
-					else JOptionPane.showMessageDialog(null, "Please make sure all fields have values, and Account Number is a unique 8 digit number");
-					dispose();
 				}
-			}
 		});
 
 		cancelButton.addActionListener(new ActionListener() {
@@ -155,14 +146,4 @@ public class CreateBankDialog extends JFrame {
 		setVisible(true);
 
 	}
-
-	public void put(int key, BankAccount value){
-		int hash = (key%TABLE_SIZE);
-
-		while(table.containsKey(key)){
-			hash = hash+1;
-		}
-		table.put(hash, value);
-	}
-
 }
