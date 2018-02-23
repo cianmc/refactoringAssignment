@@ -182,7 +182,7 @@ public class BankApplication extends JFrame {
 			}
 		};
 
-		ActionListener next1 = new ActionListener(){
+		ActionListener next = new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				BankNavigateFunctions.nextItem();
 			}
@@ -218,8 +218,8 @@ public class BankApplication extends JFrame {
 			}
 		});
 
-		nextItemButton.addActionListener(next1);
-		nextItem.addActionListener(next1);
+		nextItemButton.addActionListener(next);
+		nextItem.addActionListener(next);
 
 		prevItemButton.addActionListener(prev);
 		prevItem.addActionListener(prev);
@@ -303,12 +303,15 @@ public class BankApplication extends JFrame {
 		// Exit Action Listeners
 		closeApp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if(!table.isEmpty()) {
 				int answer = JOptionPane.showConfirmDialog(BankApplication.this, "Do you want to save before quitting?");
 				if (answer == JOptionPane.YES_OPTION) {
 					BankFileFunctions.saveFileAs();
 					dispose();
 				}else if(answer == JOptionPane.NO_OPTION)
 					dispose();
+				}
+				dispose();
 			}
 		});	
 	}// end of initCompnents
@@ -345,8 +348,6 @@ public class BankApplication extends JFrame {
 		ba.pack();
 		ba.setVisible(true);
 	}
-
-
 }
 
 

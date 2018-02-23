@@ -1,6 +1,7 @@
 
 import java.io.RandomAccessFile;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 
 public class BankFileFunctions extends BankApplication{
 
@@ -11,15 +12,23 @@ public class BankFileFunctions extends BankApplication{
 	protected static String fileToSaveAs = "";
 
 	public static void writeFile(){
+		if(table.isEmpty()) {
+			JOptionPane.showMessageDialog(null, "No Accounts selected, please open or create a bank account", "WARNING", JOptionPane.WARNING_MESSAGE);
+		} else {
 		OpenFileFunctions.openFileWrite();
 		SaveFileFunctions.saveToFile();
 		CloseFileFunctions.closeFile();
+		}
 	}
 
 	public static void saveFileAs(){
+		if(table.isEmpty()) {
+			JOptionPane.showMessageDialog(null, "No Accounts selected, please open or create a bank account", "WARNING", JOptionPane.WARNING_MESSAGE);
+		} else {
 		SaveFileFunctions.saveToFileAs();
 		SaveFileFunctions.saveToFile();	
 		CloseFileFunctions.closeFile();
+		}
 	}
 
 	public static void readFile(){
